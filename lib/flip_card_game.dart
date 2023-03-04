@@ -151,13 +151,13 @@ class _FlipCardGameState extends State<FlipCardGame> {
                               previousIndex =index;
                               cardstatekeys![previousIndex].currentState!.toggleCard();
                               
-                                Future.delayed(
-                                  Duration(milliseconds: 160),
-                                (){
-                                  setState(() {
-                                  wait = false;
-                                });
-                                });
+                                // Future.delayed(
+                                //   Duration(milliseconds: 160),
+                                // (){
+                                //   setState(() {
+                                //   wait = false;
+                                // });
+                                // });
             
                             });
                           }
@@ -182,7 +182,7 @@ class _FlipCardGameState extends State<FlipCardGame> {
                           }
                         }
                       }
-                                  setState(() {});
+                                  // setState(() {});
 
                     },
                   back: Container(
@@ -222,15 +222,16 @@ child: Center(
                   direction: FlipDirection.HORIZONTAL,
                   )
                   :Container(
-                      width: 200,
-                      height: 200,
+                      width: 309,
+                      height: 474,
                         decoration: BoxDecoration(
                       color:Color(0xff292a3e),
                       borderRadius: BorderRadius.circular(10),
                       image:DecorationImage(image: AssetImage ("assets/face.png"),
 )),
-child: Image.asset(data![index]),
-)
+child: Center(
+  child: Image.asset(data![index],width: 85,height: 85,)),
+),
                   // getItem(index)
                   ),
                 
