@@ -27,31 +27,32 @@ List<Details>list=[
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-
+      backgroundColor: Color(0xff292a3e),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
            itemCount: list.length,
           itemBuilder:(context, index) => GestureDetector(
-            onTap:() { Navigator.push(context, MaterialPageRoute(builder:(context) => (list[index].goto)!,));},
+            onTap:() { 
+              Navigator.push(context, MaterialPageRoute(
+                builder:(context) => (list[index].goto)!,));},
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
                 children: [
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color:list[index].secondaryColor,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [BoxShadow(
-                      blurRadius: 4,
-                      color: Colors.black45,
-                      spreadRadius: 0.5,
-                      offset: Offset(3, 4)
-                    )] ) ,
-                  ),
+                  // Container(
+                  //   height: 100,
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     color:list[index].secondaryColor,
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   boxShadow: [BoxShadow(
+                  //     blurRadius: 4,
+                  //     color: Colors.black45,
+                  //     spreadRadius: 0.5,
+                  //     offset: Offset(3, 4)
+                  //   )] ) ,
+                  // ),
                   Container(
                     height:90,
                     width:double.infinity,
@@ -66,7 +67,8 @@ List<Details>list=[
                                 offset: Offset(
                                   5,
                                   3,
-                                ))
+                                )
+                                )
                           ]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,11 +84,11 @@ List<Details>list=[
                               blurRadius: 2,
                               offset: Offset(1, 2),
                             ),
-                            Shadow(
-                               color: Colors.green,
-                              blurRadius: 2,
-                              offset: Offset(0.5,2),
-                            )
+                            // Shadow(
+                            //    color: Colors.green,
+                            //   blurRadius: 2,
+                            //   offset: Offset(0.5,2),
+                            // )
                           ]
                         ),),),
                         Row(

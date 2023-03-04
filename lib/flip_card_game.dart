@@ -6,15 +6,20 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class FlipCardGame extends StatefulWidget {
-  final Level level1;
-  const FlipCardGame(this.level1);
+  final Level level;
+  const FlipCardGame(
+    this.level
+    );
   @override
-  State<FlipCardGame> createState() =>  _FlipCardGameState(level1);
+  State<FlipCardGame> createState() =>  _FlipCardGameState(
+    level
+    );
 }
 
 class _FlipCardGameState extends State<FlipCardGame> {
   _FlipCardGameState(this.level);
   Level level;
+  bool isBack = true;
   int previousIndex = -1;
   bool flip = false;
   bool start = false;
@@ -26,22 +31,31 @@ class _FlipCardGameState extends State<FlipCardGame> {
   List<bool>? cardFlips;
  List<GlobalKey<FlipCardState>>? cardstatekeys;
   int time = 5;
- Widget getItem(int index){
-return Container(
-  decoration: BoxDecoration(
-color: Colors.grey[100],
-boxShadow: [BoxShadow(
-  color: Colors.black45,
-  blurRadius: 3,
-  spreadRadius: 0.8,
-  offset: Offset(2.0, 1)
-)],
-    borderRadius: BorderRadius.circular(5),
-  ),
-  margin: EdgeInsets.all(4.0),
-  child: Image.asset(data![index]),
-);
- }
+//  Widget getItem(int index){
+// return Container(
+// //   decoration: BoxDecoration(
+// // color: Colors.grey[100],
+// // boxShadow: [BoxShadow(
+// //   color: Colors.black45,
+// //   blurRadius: 3,
+// //   spreadRadius: 0.8,
+// //   offset: Offset(2.0, 1)
+// // )],
+// //     borderRadius: BorderRadius.circular(5),
+// //   ),
+// //   margin: EdgeInsets.all(4.0),
+// //   child: Image.asset(
+//                       child:
+//Container(
+//                       width: 200,
+//                       height: 200,
+//                         decoration: BoxDecoration(
+//                       color:Color(0xff292a3e),
+//                       borderRadius: BorderRadius.circular(10),
+//                       image:DecorationImage(image: AssetImage (data![index]),
+// )))
+// );
+//  }
  StartTimer(){
   timer =Timer.periodic(Duration(seconds: 1), (timer) {
     setState(() {
@@ -50,11 +64,11 @@ boxShadow: [BoxShadow(
    });
  }
  void restart(){
-  StartTimer();
+  time = 5;
   data = getSourceArray(level);
+  StartTimer();
   cardFlips = getInitialItemState(level);
   cardstatekeys = getCardStateKeys(level);
-  time = 5;
   left = (data!.length ~/ 2);
   isFinished = false;
   Future.delayed(Duration(seconds: 6),(){
@@ -77,6 +91,7 @@ boxShadow: [BoxShadow(
   @override
   Widget build(BuildContext context) {
       return isFinished! ? Scaffold(
+              backgroundColor: Color(0xff292a3e),
         body: Center(
           child: GestureDetector(
             onTap: () {
@@ -103,12 +118,13 @@ boxShadow: [BoxShadow(
         ),
         )
       :Scaffold(
+              backgroundColor: Color(0xff292a3e),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                 Padding(padding: EdgeInsets.all(16.0)
-                ,child: time > 0 ? Text("$time",style: Theme.of(context).textTheme.bodyLarge,): Text("left:$left",style: Theme.of(context).textTheme.bodyLarge,),
+                ,child: time > 0 ? Text("$time",style:TextStyle(color: Colors.white),): Text("left:$left",style: TextStyle(color: Colors.white)),
                 ),
                   Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -128,7 +144,7 @@ boxShadow: [BoxShadow(
                         flip = false;
                         if(previousIndex != index){
                           if(data![previousIndex] != data![index]){
-                            wait = true;
+                            wait = false;
                             Future.delayed(Duration(milliseconds: 1500),
                             (){
                               cardstatekeys![previousIndex].currentState!.toggleCard();
@@ -150,7 +166,7 @@ boxShadow: [BoxShadow(
                             cardFlips![index] = false ;
                             print(cardFlips);
                             setState(() {
-                              left =- 1;
+                              left = left! - 1;
                             });
                             if(cardFlips!.every((t) => t ==false)){
                               print("won");
@@ -169,29 +185,53 @@ boxShadow: [BoxShadow(
                                   setState(() {});
 
                     },
-                  back:  getItem(index),
+                  back: Container(
+                      width: 309,
+                      height: 474,
+                        decoration: BoxDecoration(
+                      color:Color(0xff292a3e),
+                      borderRadius: BorderRadius.circular(10),
+                      image:DecorationImage(image: AssetImage ("assets/face.png"),
+)),
+child: Center(
+  child: Image.asset(data![index],width: 85,height: 85,)),
+),
+                  //  getItem(index),
                     front: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black45,
-                          blurRadius: 3,
-                          spreadRadius: 0.8,
-                          offset: Offset(2.0, 1)
-                        )
-                      ]
+                      width: 309,
+                      height: 474,
+                      child: Container(
+                        decoration: BoxDecoration(
+                      color:Color(0xff292a3e),
+                      borderRadius: BorderRadius.circular(10),
+                      image:DecorationImage(image: AssetImage("assets/back.png")),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.black45,
+                      //     blurRadius: 3,
+                      //     spreadRadius: 0.8,
+                      //     offset: Offset(2.0, 1)
+                      //   )
+                      // ]
                   ), 
                       margin:EdgeInsets.all(4.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset("assets/animalspics/quest.png"),
-                      ),
+                        // child: 
+                        ),
                   ),
                   flipOnTouch: wait ? false:cardFlips![index],
                   direction: FlipDirection.HORIZONTAL,
-                  ):getItem(index)
+                  )
+                  :Container(
+                      width: 200,
+                      height: 200,
+                        decoration: BoxDecoration(
+                      color:Color(0xff292a3e),
+                      borderRadius: BorderRadius.circular(10),
+                      image:DecorationImage(image: AssetImage ("assets/face.png"),
+)),
+child: Image.asset(data![index]),
+)
+                  // getItem(index)
                   ),
                 
              ) ]
